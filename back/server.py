@@ -15,6 +15,10 @@ face_key = os.getenv("FACE_KEY")
 def get_face_id(face_image):
     data = {'url' : 'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&h=350'}
     response = call_get('https://brazilsouth.api.cognitive.microsoft.com/face/v1.0/detect', face_image)
+    
+    if len(response) == 0:
+        return ''
+    
     return response[0]['faceId']
  
 def submit_face_id(face_id):
@@ -50,6 +54,10 @@ def person_search():
     image = request_data['image']
     decoded_image = base64.b64decode(image)
     face_id = get_face_id(decoded_image)
+    
+    if face_id == '':
+        return json.dumps({'faceId': '', 'candidates': []})
+
     return submit_face_id(face_id)
 
 if __name__ == '__main__':       
