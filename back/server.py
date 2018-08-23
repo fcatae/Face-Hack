@@ -1,5 +1,5 @@
 import requests
-from flask import Flask
+from flask import Flask, request
 import os
 from dotenv import load_dotenv
 import json
@@ -7,13 +7,12 @@ import base64
 
 app = Flask(__name__)
 
-# image_64_decode = base64.decodestring(image_64_encode)
-# this will be the line to decode the base64 image coming from the post method
-# have to read from the body
+load_dotenv('.env')    
+face_key = os.getenv("FACE_KEY") 
 
-def get_face_id():
+def get_face_id(face_image):
     data = {'url' : 'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&h=350'}
-    response = call('https://brazilsouth.api.cognitive.microsoft.com/face/v1.0/detect', data)
+    response = call_get('https://brazilsouth.api.cognitive.microsoft.com/face/v1.0/detect', face_image)
     return response[0]['faceId']
  
 def submit_face_id(face_id):
@@ -22,28 +21,34 @@ def submit_face_id(face_id):
         "faceIds": [face_id]
     }
 
-    response = call('https://brazilsouth.api.cognitive.microsoft.com/face/v1.0/identify', data)
+    response = call_submit('https://brazilsouth.api.cognitive.microsoft.com/face/v1.0/identify', data)
     return json.dumps(response[0])
 
-def call(endpoint, data):
-    load_dotenv('.env')
-    face_key = os.getenv("FACE_KEY")
+def call_get(endpoint, data):
+    headers = {'Content-Type' : 'application/octet-stream', 'Ocp-Apim-Subscription-Key' : face_key}
+    r = requests.post(endpoint, headers=headers, data=data)    
+    return r.json()
+
+def call_submit(endpoint, json):
     headers = {'Content-Type' : 'application/json', 'Ocp-Apim-Subscription-Key' : face_key}
-    r = requests.post(endpoint, json=data, headers=headers)
+    r = requests.post(endpoint, headers=headers, json=json)    
     return r.json()
 
 @app.route('/')
 def hello_world():
     return 'Hello, World!\n'
 
-@app.route('/healthz')
+@app.route('/healthz', methods=['GET', 'POST'])
 def health_check():
     return 'Everything working!\n'
 
 @app.route('/api/person/search', methods=['POST'])
 def person_search():
-    face_id = get_face_id()
+    request_data = request.get_json(force=True)
+    image = request_data['image']
+    decoded_image = base64.b64decode(image)
+    face_id = get_face_id(decoded_image)
     return submit_face_id(face_id)
 
-if __name__ == '__main__':
-    app.run('0.0.0.0', port=5000)
+if __name__ == '__main__':       
+    app.run('0.0.0.0', port=5001)
