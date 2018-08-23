@@ -3,19 +3,22 @@
 
 function previewFile() {
     var preview = document.querySelector('img');
+    var result_field = document.querySelector('#result_field');
     var file = document.querySelector('input[type=file]').files[0];
     var reader = new FileReader();
 
     reader.addEventListener("load", function () {
-        preview.src = reader.result;
-        base64 = preview.src
-        axios.get('https://reqres.in/api/users/2')
+        base64 = reader.result
+        axios.post('https://cognitive-back.azurewebsites.net/api/person/search', {
+            image: base64.split(',')[1]
+        })
             .then(function (response) {
-                // handle success
-                console.log(response);
+                console.log(response)
+                preview.src = reader.result;
+                if (response.data.candidates.length == 0) {
+                    result_field.textContent = 'Fraudador'
+                }
             })
-
-        console.log('Preview', base64.split(',')[1])
     }, false);
 
     if (file) {
