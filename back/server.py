@@ -4,8 +4,10 @@ import os
 from dotenv import load_dotenv
 import json
 import base64
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 load_dotenv('.env')    
 face_key = os.getenv("FACE_KEY") 
