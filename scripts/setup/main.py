@@ -1,58 +1,64 @@
+import os
 import glob
 import requests
+from dotenv import load_dotenv
 
-path = ''
+load_dotenv()
 
-#subscription key
-key = ""
+path = os.getenv('IMAGES_PATH')
+key = os.getenv('SUBSCRIPTION_KEY')
+endpoint = os.getenv('ENDPOINT')
+group_id = os.getenv('GROUP_ID')
 
-endpoint = ""
+def cognitive_header(content_type):
+    return {
+        'Content-Type' : content_type, 
+        'Ocp-Apim-Subscription-Key' : key
+    }
 
-headers = {'Content-Type' : 'application/json', 'Ocp-Apim-Subscription-Key' : key}
-headers_with_file = {'Content-Type' : 'application/octet-stream', 'Ocp-Apim-Subscription-Key' : key}
-
-
-def create_large_person_group( group_id, name, userdata ):
-    uri = endpoint + "/largepersongroups/" + group_id
-    body = {'name' : name, 'userData' : userdata}
-    r = requests.put( uri, json = body, headers = headers )
-
-
+def get_body(name, description):
+    return { 'name' : name, 'userData' : description }
+    
+def create_large_person_group(group_id, name, userdata):
+    uri = endpoint + '/largepersongroups/' + group_id
+    headers = cognitive_header('application/json')
+    body = get_body(name, userdata)
+    
+    requests.put(uri, json = body, headers = headers)
 
 def create_person( group_id, name, userdata ):
-     uri = endpoint + "/largepersongroups/" + group_id + "/persons"
-     body = {'name' : name, 'userData' : userdata}
-     r = requests.post( uri, json = body, headers = headers )
-     response_jason = r.json()
-     person_id =  response_jason['personId']
-     print( 'person id = ', person_id )
-     return person_id
+    uri = endpoint + "/largepersongroups/" + group_id + "/persons"
+    headers = cognitive_header('application/json')
+    body = get_body(name, userdata)
+     
+    request = requests.post( uri, json = body, headers = headers )
+    response = request.json()
+    person_id =  response['personId']
 
-
+    return person_id
 
 def add_face( group_id, image_path, person_id ):
     uri = endpoint + "/largepersongroups/" + group_id + "/persons/" + person_id + '/persistedfaces'
+    headers = cognitive_header('application/octet-stream')
     binary_file = open( image_path, 'rb' )
-    r = requests.post( uri, data = binary_file, headers = headers_with_file )
 
-
+    requests.post( uri, data = binary_file, headers = headers )
 
 def train(  group_id ):
     uri = endpoint + "/largepersongroups/" + group_id + "/train" 
-    r = requests.post( uri, headers = headers )
+    headers = cognitive_header('application/json')
 
-
+    requests.post( uri, headers = headers )
 
 def get_train_status( group_id ):
     uri = endpoint + "/largepersongroups/" + group_id + '/training'
+    headers = cognitive_header('application/json')
+
     r = requests.get( uri, headers = headers )  
     return r.json()     
 
-
 def main():
-    #Cria grupo de pessoas (fraudadores)
-    group_id = "my_group_id"
-    create_large_person_group( group_id, "my_group_name", "primeiro teste" )
+    create_large_person_group( group_id, "Grupo de fraudadores", "Grupo de fraudadores" )
 
     # Adiciona as imagens (fotos) dos fraudadores
     for file_path in glob.glob( path + "/*.jpg" ):
@@ -65,8 +71,5 @@ def main():
 
     print( get_train_status( group_id ) )
         
-
-
 if __name__ == "__main__":
-    # execute only if run as a script
     main()
