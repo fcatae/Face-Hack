@@ -43,6 +43,20 @@ python3 server.py
 
 ### 2.2 Spinning up with Docker
 
+In order to run with Docker, just build the image the usual way, like:
 
+``` shell
+
+docker build -t <IMAGE_TAG> .
+
+```
+
+and after that run, mapping a port:
+
+``` shell
+
+docker run -p 5000:5000 <IMAGE_TAG>
+
+```
 
 ## 3. Front End
