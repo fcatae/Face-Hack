@@ -1,9 +1,13 @@
+import os
 import glob
 import requests
+from dotenv import load_dotenv
 
-path = ''
-key = ""
-endpoint = ""
+load_dotenv()
+
+path = os.getenv("IMAGES_PATH")
+key = os.getenv("SUBSCRIPTION_KEY")
+endpoint = os.getenv("ENDPOINT")
 
 def cognitive_header(content_type):
     return {
