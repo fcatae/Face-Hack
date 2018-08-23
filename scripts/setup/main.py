@@ -8,6 +8,7 @@ load_dotenv()
 path = os.getenv('IMAGES_PATH')
 key = os.getenv('SUBSCRIPTION_KEY')
 endpoint = os.getenv('ENDPOINT')
+group_id = os.getenv('GROUP_ID')
 
 def cognitive_header(content_type):
     return {
@@ -30,9 +31,9 @@ def create_person( group_id, name, userdata ):
     headers = cognitive_header('application/json')
     body = get_body(name, userdata)
      
-    r = requests.post( uri, json = body, headers = headers )
-    response_json = r.json()
-    person_id =  response_json['personId']
+    request = requests.post( uri, json = body, headers = headers )
+    response = request.json()
+    person_id =  response['personId']
 
     return person_id
 
@@ -57,9 +58,7 @@ def get_train_status( group_id ):
     return r.json()     
 
 def main():
-    #Cria grupo de pessoas (fraudadores)
-    group_id = "my_group_id"
-    create_large_person_group( group_id, "my_group_name", "primeiro teste" )
+    create_large_person_group( group_id, "Grupo de fraudadores", "Grupo de fraudadores" )
 
     # Adiciona as imagens (fotos) dos fraudadores
     for file_path in glob.glob( path + "/*.jpg" ):
