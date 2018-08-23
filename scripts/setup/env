@@ -1,3 +1,3 @@
-SUBSCRIPTION_KEY=90dbab3e249e4044a44aedb6125625aa
+SUBSCRIPTION_KEY=
 ENDPOINT=https://brazilsouth.api.cognitive.microsoft.com/face/v1.0/
-IMAGES_PATH=C:/Git/FaceRec-Samples/Sample_Images/geisa.jpg
+IMAGES_PATH=
