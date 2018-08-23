@@ -2,52 +2,52 @@ import glob
 import requests
 
 path = ''
-
-#subscription key
 key = ""
-
 endpoint = ""
 
-headers = {'Content-Type' : 'application/json', 'Ocp-Apim-Subscription-Key' : key}
-headers_with_file = {'Content-Type' : 'application/octet-stream', 'Ocp-Apim-Subscription-Key' : key}
-
-
-def create_large_person_group( group_id, name, userdata ):
+def cognitive_header(content_type):
+    return {
+        'Content-Type' : content_type, 
+        'Ocp-Apim-Subscription-Key' : key
+    }
+    
+def create_large_person_group(group_id, name, userdata):
     uri = endpoint + "/largepersongroups/" + group_id
-    body = {'name' : name, 'userData' : userdata}
-    r = requests.put( uri, json = body, headers = headers )
-
-
+    headers = cognitive_header('application/json')
+    body = { 'name' : name, 'userData' : userdata }
+    
+    requests.put(uri, json = body, headers = headers)
 
 def create_person( group_id, name, userdata ):
-     uri = endpoint + "/largepersongroups/" + group_id + "/persons"
-     body = {'name' : name, 'userData' : userdata}
-     r = requests.post( uri, json = body, headers = headers )
-     response_jason = r.json()
-     person_id =  response_jason['personId']
-     print( 'person id = ', person_id )
-     return person_id
-
-
+    uri = endpoint + "/largepersongroups/" + group_id + "/persons"
+    headers = cognitive_header('application/json')
+    body = {'name' : name, 'userData' : userdata}
+     
+    r = requests.post( uri, json = body, headers = headers )
+    response_json = r.json()
+    person_id =  response_json['personId']
+    print( 'person id = ', person_id )
+    return person_id
 
 def add_face( group_id, image_path, person_id ):
     uri = endpoint + "/largepersongroups/" + group_id + "/persons/" + person_id + '/persistedfaces'
+    headers = cognitive_header('application/octet-stream')
     binary_file = open( image_path, 'rb' )
-    r = requests.post( uri, data = binary_file, headers = headers_with_file )
 
-
+    requests.post( uri, data = binary_file, headers = headers )
 
 def train(  group_id ):
     uri = endpoint + "/largepersongroups/" + group_id + "/train" 
-    r = requests.post( uri, headers = headers )
+    headers = cognitive_header('application/json')
 
-
+    requests.post( uri, headers = headers )
 
 def get_train_status( group_id ):
     uri = endpoint + "/largepersongroups/" + group_id + '/training'
+    headers = cognitive_header('application/json')
+
     r = requests.get( uri, headers = headers )  
     return r.json()     
-
 
 def main():
     #Cria grupo de pessoas (fraudadores)
@@ -65,8 +65,5 @@ def main():
 
     print( get_train_status( group_id ) )
         
-
-
 if __name__ == "__main__":
-    # execute only if run as a script
     main()
