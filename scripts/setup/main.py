@@ -5,32 +5,35 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-path = os.getenv("IMAGES_PATH")
-key = os.getenv("SUBSCRIPTION_KEY")
-endpoint = os.getenv("ENDPOINT")
+path = os.getenv('IMAGES_PATH')
+key = os.getenv('SUBSCRIPTION_KEY')
+endpoint = os.getenv('ENDPOINT')
 
 def cognitive_header(content_type):
     return {
         'Content-Type' : content_type, 
         'Ocp-Apim-Subscription-Key' : key
     }
+
+def get_body(name, description):
+    return { 'name' : name, 'userData' : description }
     
 def create_large_person_group(group_id, name, userdata):
-    uri = endpoint + "/largepersongroups/" + group_id
+    uri = endpoint + '/largepersongroups/' + group_id
     headers = cognitive_header('application/json')
-    body = { 'name' : name, 'userData' : userdata }
+    body = get_body(name, userdata)
     
     requests.put(uri, json = body, headers = headers)
 
 def create_person( group_id, name, userdata ):
     uri = endpoint + "/largepersongroups/" + group_id + "/persons"
     headers = cognitive_header('application/json')
-    body = {'name' : name, 'userData' : userdata}
+    body = get_body(name, userdata)
      
     r = requests.post( uri, json = body, headers = headers )
     response_json = r.json()
     person_id =  response_json['personId']
-    print( 'person id = ', person_id )
+
     return person_id
 
 def add_face( group_id, image_path, person_id ):
