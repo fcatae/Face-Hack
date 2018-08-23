@@ -1,7 +1,6 @@
 import requests
 from flask import Flask, request
 import os
-from dotenv import load_dotenv
 import json
 import base64
 from flask_cors import CORS
@@ -9,7 +8,6 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-load_dotenv('.env')    
 face_key = os.getenv("FACE_KEY") 
 
 def get_face_id(face_image):
@@ -23,7 +21,7 @@ def get_face_id(face_image):
  
 def submit_face_id(face_id):
     data = {
-        "largePersonGroupId": "bancodobrasil",
+        "largePersonGroupId": "bb-fraudadores",
         "faceIds": [face_id]
     }
 
