@@ -51,4 +51,4 @@ def person_search():
     return submit_face_id(face_id)
 
 if __name__ == '__main__':       
-    app.run('0.0.0.0', port=5000)
+    app.run('0.0.0.0')
