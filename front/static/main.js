@@ -17,6 +17,8 @@ function previewFile() {
                 preview.src = reader.result;
                 if (response.data.candidates.length > 0) {
                     result_field.textContent = 'Fraudador'
+                } else {
+                    result_field.textContent = 'Boa reputação'
                 }
             })
     }, false);
