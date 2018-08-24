@@ -1,0 +1,14 @@
+br/com/bb/big/library/exception/VelmaException.class
+br/com/bb/face/azure/bo/FaceRecognitionBO.class
+br/com/bb/big/library/enums/VelmaConstraintViolationEnum.class
+br/com/bb/big/face/azure/sdk/microsoft/FaceGroupImageSDK.class
+br/com/bb/big/library/microsoft/enums/DadosMicrosoftEnum.class
+br/com/bb/face/azure/controller/FaceRecognitionController.class
+br/com/bb/big/face/azure/sdk/microsoft/FaceSelfieDocumentoSDK.class
+br/com/bb/big/face/azure/util/CreateBodySimilaryUtil.class
+br/com/bb/face/azure/bo/FaceGroupImageBO.class
+br/com/bb/big/face/azure/sdk/microsoft/FaceAddImageSDK.class
+br/com/bb/face/azure/controller/TesteController.class
+br/com/bb/face/azure/controller/FaceGroupController.class
+br/com/bb/big/face/azure/dto/SimilaryDto.class
+br/com/bb/face/azure/controller/BigFaceAzureApiApplication.class

@@ -3,25 +3,44 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" type="image/x-icon" href="logo.png"/>
     <title>Base de fraudadores</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/body.css" />
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/jquery-1.2.6.min.js"></script>
+    <script src="js/function.js"></script>
     <script src="main.js"></script>
 </head>
 
 <body>
-    <div>
-        <input type="file" onchange="previewFile()">
-        <br>
-        <img src="bb.jpeg" height="200" alt="Image preview...">
+    <ul>
+        <li><a><img src="logo.png" width="20" height="20"/></a></li>
+        <li>&nbsp;&nbsp;</li>
+        <li><a href="#home" class="active">Valida Fraudadores</a></li>
+    </ul>
+    <div class="space-blank">
+        <fieldset>
+            <legend>Upload imagem para validação na base de fraudadores</legend>
+            <center>
+                <img src="bb.jpeg" id="imgSupostoFraude" height="200" alt="Image preview..." class="border-img">
+                <br/><br/><br/><br/>
+                <input type="file" id="imgFile" onchange="previewFile()" placeholder="Coloque a imagem que será validada aqui">
+            </center>
+        </fieldset>
     </div>
     <div class="align">
 
     </div>
-    <div>
-        <b id="result_field"></b>
-    </div>
+    <fieldset>
+        <legend>Dados da validação</legend>
+        <div>
+            <br/><br/><br/><br/>
+            <b id="result_field">Nenhum dado validado...</b>
+        </div>
+    </fieldset>
 
 </body>
 

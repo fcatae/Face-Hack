@@ -1,0 +1,14 @@
+/Users/paulocotta/Desktop/big-face-azure-api/src/main/java/br/com/bb/big/face/azure/sdk/microsoft/FaceSelfieDocumentoSDK.java
+/Users/paulocotta/Desktop/big-face-azure-api/src/main/java/br/com/bb/face/azure/controller/BigFaceAzureApiApplication.java
+/Users/paulocotta/Desktop/big-face-azure-api/src/main/java/br/com/bb/big/library/enums/VelmaConstraintViolationEnum.java
+/Users/paulocotta/Desktop/big-face-azure-api/src/main/java/br/com/bb/big/face/azure/sdk/microsoft/FaceGroupImageSDK.java
+/Users/paulocotta/Desktop/big-face-azure-api/src/main/java/br/com/bb/big/face/azure/sdk/microsoft/FaceAddImageSDK.java
+/Users/paulocotta/Desktop/big-face-azure-api/src/main/java/br/com/bb/big/library/microsoft/enums/DadosMicrosoftEnum.java
+/Users/paulocotta/Desktop/big-face-azure-api/src/main/java/br/com/bb/face/azure/bo/FaceRecognitionBO.java
+/Users/paulocotta/Desktop/big-face-azure-api/src/main/java/br/com/bb/face/azure/controller/TesteController.java
+/Users/paulocotta/Desktop/big-face-azure-api/src/main/java/br/com/bb/big/face/azure/util/CreateBodySimilaryUtil.java
+/Users/paulocotta/Desktop/big-face-azure-api/src/main/java/br/com/bb/face/azure/bo/FaceGroupImageBO.java
+/Users/paulocotta/Desktop/big-face-azure-api/src/main/java/br/com/bb/face/azure/controller/FaceGroupController.java
+/Users/paulocotta/Desktop/big-face-azure-api/src/main/java/br/com/bb/face/azure/controller/FaceRecognitionController.java
+/Users/paulocotta/Desktop/big-face-azure-api/src/main/java/br/com/bb/big/library/exception/VelmaException.java
+/Users/paulocotta/Desktop/big-face-azure-api/src/main/java/br/com/bb/big/face/azure/dto/SimilaryDto.java
